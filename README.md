@@ -1,7 +1,7 @@
 # IYD
 Base URL `/topics`
-| HTTM Method   |  URI path     |  Description  |  JSON        |
-| ------------- | ------------- | ------------- | ------------- |
+| HTTM Method   |  URI path     |  Description  | 
+| ------------- | ------------- | ------------- | 
 | GET | `/` | index page |
 | GET | `/create` | Create topic |
 | POST | `/create` | Create topic |
