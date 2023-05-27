@@ -1,4 +1,5 @@
 # IYD
+Base URL |`/topics`|
 | HTTM Method   |  URI path     |  Description  |  JSON        |
 | ------------- | ------------- | ------------- | ------------- |
 | GET | `/` | index page |
