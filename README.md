@@ -2,6 +2,7 @@
 | HTTM Method   |  URI path     |  Description  |  JSON        |
 | ------------- | ------------- | ------------- | ------------- |
 | GET | `/` | index page |
-| GET | `/recipes` | Recipes list |
-| GET | `/recipes/:id`| Recipe details |
+| GET | `/create` | Create topic |
+| POST | `/create` | Create topic |
+| GET | `/mytopics`| Profile topics |
 
