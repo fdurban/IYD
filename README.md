@@ -12,6 +12,7 @@ Base URL `/home`
 | GET | `/randomresume`| Get a random resume|
 
 Auth Routes
+
 Base URL `/auth`
 | HTTM Method   |  URI path     |  Description  | 
 | ------------- | ------------- | ------------- | 
