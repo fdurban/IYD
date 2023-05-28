@@ -1,7 +1,9 @@
 # IYD
-| HTTM Method   |  URI path     |  Description  |  JSON        |
-| ------------- | ------------- | ------------- | ------------- |
+Base URL `/topics`
+| HTTM Method   |  URI path     |  Description  | 
+| ------------- | ------------- | ------------- | 
 | GET | `/` | index page |
-| GET | `/recipes` | Recipes list |
-| GET | `/recipes/:id`| Recipe details |
+| GET | `/create` | Create topic |
+| POST | `/create` | Create topic |
+| GET | `/mytopics`| Profile topics |
 
