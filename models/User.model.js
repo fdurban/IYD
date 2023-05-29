@@ -18,7 +18,7 @@ const userSchema = new Schema(
       type: String,
       required: [true, 'Password is required.']
     },
-    profileImage: {
+    avatar: {
       type: String,
       default: "https://i.stack.imgur.com/l60Hf.png"
     },
@@ -28,14 +28,13 @@ const userSchema = new Schema(
     },
     role: {
       type: String,
-      enum: ["user", "admin"],
-      default: "user"
+      enum: ["USER", "ADMIN"],
+      default: "USER"
     },
-    cards: {
+    cards: [{
       type: Schema.Types.ObjectId,
       ref: "Card",
-      trim: true
-    }
+    }]
   },
   {
     timestamps: true
