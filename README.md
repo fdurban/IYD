@@ -6,10 +6,10 @@ Base URL `/home`
 | ------------- | ------------- | ------------- | 
 | GET | `/` | index page |
 | GET | `/categories` | Subject Category list e.g: History, Art, Physics... |
-| POST | `/topics` | Topics lists sorted by user relevance |
-| GET | `/topics/:id`| Topic details and resumes |
-| GET | `/users`| Users list only sorted by relevance |
-| GET | `/randomresume`| Get a random resume|
+| POST | `/cards` | Cards list |
+| GET | `/cards/:id`| Card details and resumes |
+| GET | `/users`| Users list |
+| GET | `/randomcard`| Get a random card|
 
 Auth Routes
 
