@@ -1,6 +1,6 @@
 const router = require('express').Router()
 
-router.use('/IYD', require('./card.routes'))
-router.use('/IYD', require('./auth.routes'))
+router.use('/cards', require('./card.routes'))
+router.use('/auth', require('./auth.routes'))
 
 module.exports = router

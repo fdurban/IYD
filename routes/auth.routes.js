@@ -1,44 +1,98 @@
 const router = require('express').Router()
-
+const bcrypt = require('bcryptjs')
 const User = require('../models/User.model')
 
-router.get("/getAllUsers", (req, res, next) => {
+const jwt = require('jsonwebtoken')
+const { isAuthenticated } = require("../middlewares/verifyToken.middleware")
+const saltRounds = 10
+
+router.post('/signup', (req, res, next) => {
+
+    const { email, password, username } = req.body
+
+    if (password.length < 2) {
+        res.status(400).json({ message: 'Password must have at least 2 characters' })
+        return
+    }
 
     User
+        .findOne({ email })
+        .then((foundUser) => {
 
-        .find()
-        .then(response => res.json(response))
-        .catch(err => next(err))
+            if (foundUser) {
+                res.status(400).json({ message: "User already exists." })
+                return
+            }
+
+            const salt = bcrypt.genSaltSync(saltRounds)
+            const hashedPassword = bcrypt.hashSync(password, salt)
+
+            return User.create({ email, password: hashedPassword, username })
+        })
+        .then((createdUser) => {
+
+            const { email, username, _id } = createdUser
+            const user = { email, username, _id }
+
+            res.status(201).json({ user })
+        })
+        .catch(err => {
+            next(err)
+        })
 })
 
-router.get("/:id", (req, res, next) => {
+router.post('/login', (req, res, next) => {
 
-    const { id } = req.params
+
+    console.log('secretoo', process.env.TOKEN_SECRET)
+
+    const { email, password } = req.body;
+
+    if (email === '' || password === '') {
+        res.status(400).json({ message: "Provide email and password." });
+        return;
+    }
 
     User
-        .findById(id)
-        .then(response => res.json(response))
-        .catch(err => next(err))
+        .findOne({ email })
+        .then((foundUser) => {
+
+            if (!foundUser) {
+                res.status(401).json({ message: "User not found." })
+                return;
+            }
+
+            if (bcrypt.compareSync(password, foundUser.password)) {
+
+                const { _id, email, username } = foundUser;
+
+                const payload = { _id, email, username }
+
+                const authToken = jwt.sign(
+                    payload,
+                    process.env.TOKEN_SECRET,
+                    { algorithm: 'HS256', expiresIn: "6h" }
+                )
+
+                res.json({ authToken: authToken });
+            }
+            else {
+                res.status(401).json({ message: "Unable to authenticate the user" });
+            }
+
+        })
+        .catch(err => next(err));
 })
 
-router.post("/:id/edit", (req, res, next) => {
 
-    const { username, email, password, avatar, description, role, cards } = req.body
 
-    User
-        .create({ username, email, password, avatar, description, role, cards })
-        .then(response => res.json(response))
-        .catch(err => next(err))
-})
+router.get('/verify', isAuthenticated, (req, res, next) => {
 
-router.delete("/:id/delete", (req, res, next) => {
+    console.log('EL USUARIO TIENE UN TOKEN CORRECTO Y SUS DATOS SON', req.payload)
 
-    const { id } = req.params
-
-    User
-        .findByIdAndDelete(id)
-        .then(response => res.json(response))
-        .catch(err => next(err))
+    setTimeout(() => {
+        res.status(200).json(req.payload)
+    }, 1500)
 })
 
 module.exports = router
