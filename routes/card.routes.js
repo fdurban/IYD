@@ -21,12 +21,12 @@ router.get("/:owner", (req, res, next) => {
         .catch(err => next(err))
 })
 
-router.get("/category/:category", (req, res, next) => {
+router.get("/:subject", (req, res, next) => {
 
-    const { category } = req.params
+    const { subject } = req.params
 
     Card
-        .findById(category)
+        .findById(subject)
         .then(response => res.json(response))
         .catch(err => next(err))
 })
