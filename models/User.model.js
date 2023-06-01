@@ -1,7 +1,6 @@
 const { Schema, model } = require("mongoose");
 const Card = require("./Card.model");
 
-// TODO: Please make sure you edit the User model to whatever makes sense in this case
 const userSchema = new Schema(
   {
     username: {

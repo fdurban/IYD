@@ -19,6 +19,7 @@ router.post('/signup', (req, res, next) => {
         .findOne({ email })
         .then((foundUser) => {
 
+
             if (foundUser) {
                 res.status(400).json({ message: "User already exists." })
                 return
