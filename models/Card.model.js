@@ -35,7 +35,11 @@ const cardSchema = new Schema(
         likes: [{
             type: String,
 
-        }]
+        }],
+        owner: {
+            type: Schema.Types.ObjectId,
+            ref: 'User'
+        }
     },
     {
         timestamps: true

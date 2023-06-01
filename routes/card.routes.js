@@ -11,6 +11,16 @@ router.get("/all", (req, res, next) => {
         .catch(err => next(err))
 })
 
+router.get("/:owner", (req, res, next) => {
+
+    const { owner } = req.params
+
+    Card
+        .find({ owner: owner })
+        .then(renponse => res.json(renponse))
+        .catch(err => next(err))
+})
+
 router.get("/category/:category", (req, res, next) => {
 
     const { category } = req.params
@@ -23,10 +33,10 @@ router.get("/category/:category", (req, res, next) => {
 
 router.post("/save", (req, res, next) => {
 
-    const { title, subject, main_content, resume1, resume2, resume3, resume4, likes } = req.body
+    const { title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner } = req.body
 
     Card
-        .create({ title, subject, main_content, resume1, resume2, resume3, resume4, likes })
+        .create({ title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner })
         .then(response => res.json(response))
         .catch(err => next(err))
 })
@@ -35,10 +45,10 @@ router.put("/:id/edit", (req, res, next) => {
 
     const { id } = req.params;
 
-    const { title, subject, main_content, resume1, resume2, resume3, resume4, likes } = req.body;
+    const { title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner } = req.body;
 
     Card
-        .findByIdAndUpdate(id, { title, subject, main_content, resume1, resume2, resume3, resume4, likes })
+        .findByIdAndUpdate(id, { title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner })
         .then(response => res.json(response))
         .catch(err => next(err))
 })
