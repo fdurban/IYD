@@ -11,7 +11,19 @@ router.get("/all", (req, res, next) => {
         .catch(err => next(err))
 })
 
-router.get("/:owner", (req, res, next) => {
+router.get('/:id', (req, res, next) => {
+
+    const { id } = req.params
+
+    Card
+        .findById(id)
+        .then(renponse => res.json(renponse))
+        .catch(err => next(err))
+})
+
+
+
+router.get("/owner/:owner", (req, res, next) => {
 
     const { owner } = req.params
 
@@ -21,7 +33,7 @@ router.get("/:owner", (req, res, next) => {
         .catch(err => next(err))
 })
 
-router.get("/:subject", (req, res, next) => {
+router.get("/subject/:subject", (req, res, next) => {
 
     const { subject } = req.params
 
@@ -34,6 +46,8 @@ router.get("/:subject", (req, res, next) => {
 router.post("/save", (req, res, next) => {
 
     const { title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner } = req.body
+
+    console.log(req.body)
 
     Card
         .create({ title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner })

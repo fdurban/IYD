@@ -1,7 +1,10 @@
+const router = require('express').Router()
+
+const User = require('./../models/User.model')
+
 router.get("/getAllUsers", (req, res, next) => {
 
     User
-
         .find()
         .then(response => res.json(response))
         .catch(err => next(err))
@@ -36,3 +39,5 @@ router.delete("/:id/delete", (req, res, next) => {
         .then(response => res.json(response))
         .catch(err => next(err))
 })
+
+module.exports = router
