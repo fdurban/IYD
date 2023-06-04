@@ -1,3 +1,6 @@
+const User = require('./../models/User.model')
+const router = require('express').Router()
+
 router.get("/getAllUsers", (req, res, next) => {
 
     User
@@ -36,3 +39,5 @@ router.delete("/:id/delete", (req, res, next) => {
         .then(response => res.json(response))
         .catch(err => next(err))
 })
+
+module.exports = router

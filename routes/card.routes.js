@@ -31,6 +31,16 @@ router.get("/:subject", (req, res, next) => {
         .catch(err => next(err))
 })
 
+router.get("/details/:id", (req, res, next) => {
+
+    const { id } = req.params
+
+    Card
+        .findById(id)
+        .then(response => res.json(response))
+        .catch(err => next(err))
+})
+
 router.post("/save", (req, res, next) => {
 
     const { title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner } = req.body
