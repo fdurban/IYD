@@ -23,35 +23,7 @@ router.put("/:id/favoriteCard/add", isAuthenticated, favoriteCard)
 
 router.put("/:id/favoriteCard/remove", isAuthenticated, deleteFavoriteCard)
 
-router.put("/:id/favoriteCard/add", (req, res, next) => {
-    const { id } = req.params;
-    const { cardId } = req.body;
+router.put("/:id/favoriteCard/add", favoriteCard);
 
-    User
-        .findByIdAndUpdate(
-            id,
-            { $push: { cards: cardId } },
-            { new: true }
-        )
-        .then((user) => {
-            res.json(user);
-        })
-        .catch((err) => next(err));
-});
-
-
-router.put("/:id/favoriteCard/remove", (req, res, next) => {
-    const { id } = req.params;
-    const { cardId } = req.body;
-
-    User.findByIdAndUpdate(
-        id,
-        { $pull: { cards: cardId } },
-        { new: true }
-    )
-        .then((user) => {
-            res.json(user);
-        })
-        .catch((err) => next(err));
-});
+router.put("/:id/favoriteCard/remove", deleteFavoriteCard);
 module.exports = router
