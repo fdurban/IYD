@@ -38,42 +38,9 @@ const deleteUserById = (req, res, next) => {
         .catch(err => next(err))
 }
 
-const favoriteCard = (req, res, next) => {
-    const { id } = req.params;
-    const { cardId } = req.body;
-
-    User
-        .findByIdAndUpdate(
-            id,
-            { $push: { cards: cardId } },
-            { new: true }
-        )
-        .then((user) => {
-            res.json(user);
-        })
-        .catch((err) => next(err));
-}
-
-const deleteFavoriteCard = (req, res, next) => {
-    const { id } = req.params;
-    const { cardId } = req.body;
-
-    User.findByIdAndUpdate(
-        id,
-        { $pull: { cards: cardId } },
-        { new: true }
-    )
-        .then((user) => {
-            res.json(user);
-        })
-        .catch((err) => next(err));
-}
-
 module.exports = {
     getAllUsers,
     getUserById,
     editUserById,
-    deleteUserById,
-    favoriteCard,
-    deleteFavoriteCard
+    deleteUserById
 }

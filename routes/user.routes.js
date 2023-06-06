@@ -6,9 +6,7 @@ const {
     getAllUsers,
     getUserById,
     editUserById,
-    deleteUserById,
-    favoriteCard,
-    deleteFavoriteCard
+    deleteUserById
 } = require('../controllers/user.controllers')
 
 router.get("/getAllUsers", getAllUsers)
@@ -19,8 +17,5 @@ router.post("/:id/edit", isAuthenticated, editUserById)
 
 router.delete("/:id/delete", isAuthenticated, deleteUserById)
 
-router.put("/:id/favoriteCard/add", isAuthenticated, favoriteCard)
-
-router.put("/:id/favoriteCard/remove", isAuthenticated, deleteFavoriteCard)
 
 module.exports = router
