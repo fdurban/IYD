@@ -18,4 +18,7 @@ router.post("/:id/edit", isAuthenticated, editUserById)
 router.delete("/:id/delete", isAuthenticated, deleteUserById)
 
 
+router.put("/:id/favoriteCard/add", favoriteCard);
+
+router.put("/:id/favoriteCard/remove", deleteFavoriteCard);
 module.exports = router
