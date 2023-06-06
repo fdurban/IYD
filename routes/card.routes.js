@@ -2,7 +2,15 @@ const router = require('express').Router()
 
 const { isAuthenticated } = require('../middlewares/verifyToken.middleware')
 
-const { getAllCards, getCardsById, getOwner, getSubject, getDetails, saveCard, editCard, deleteCard } = require('../controllers/card.controllers')
+const {
+    getAllCards,
+    getCardsById,
+    getOwner,
+    getSubject,
+    getDetails,
+    saveCard,
+    editCard,
+    deleteCard } = require('../controllers/card.controllers')
 
 router.get("/all", getAllCards)
 
