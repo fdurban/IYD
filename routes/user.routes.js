@@ -1,45 +1,27 @@
-const User = require('./../models/User.model')
 const router = require('express').Router()
 
+const { isAuthenticated } = require('../middlewares/verifyToken.middleware')
 
-router.get("/getAllUsers", (req, res, next) => {
+const {
+    getAllUsers,
+    getUserById,
+    editUserById,
+    deleteUserById,
+    favoriteCard,
+    deleteFavoriteCard
+} = require('../controllers/user.controllers')
 
-    User
-        .find()
-        .then(response => res.json(response))
-        .catch(err => next(err))
-})
+router.get("/getAllUsers", getAllUsers)
 
-router.get("/:id", (req, res, next) => {
+router.get("/:id", isAuthenticated, getUserById)
 
-    const { id } = req.params
+router.post("/:id/edit", isAuthenticated, editUserById)
 
-    User
-        .findById(id)
-        .populate('cards')
-        .then(response => res.json(response))
-        .catch(err => next(err))
-})
+router.delete("/:id/delete", isAuthenticated, deleteUserById)
 
-router.post("/:id/edit", (req, res, next) => {
+router.put("/:id/favoriteCard/add", isAuthenticated, favoriteCard)
 
-    const { username, email, password, avatar, description, role, cards } = req.body
-
-    User
-        .create({ username, email, password, avatar, description, role, cards })
-        .then(response => res.json(response))
-        .catch(err => next(err))
-})
-
-router.delete("/:id/delete", (req, res, next) => {
-
-    const { id } = req.params
-
-    User
-        .findByIdAndDelete(id)
-        .then(response => res.json(response))
-        .catch(err => next(err))
-})
+router.put("/:id/favoriteCard/remove", isAuthenticated, deleteFavoriteCard)
 
 router.put("/:id/favoriteCard/add", (req, res, next) => {
     const { id } = req.params;
