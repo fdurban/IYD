@@ -15,22 +15,27 @@ const cardSchema = new Schema(
         main_content: {
             type: String,
             maxlength: [3000, 'La descripción debe tener max. 3000 caracteres'],
+            default: "Write here your main content"
         },
         resume1: {
             type: String,
             maxlength: [1500, 'La descripción debe tener max. 1500 caracteres'],
+            default: "Write here your first resume"
         },
         resume2: {
             type: String,
             maxlength: [750, 'La descripción debe tener max. 750 caracteres'],
+            default: "Write here your second resume"
         },
         resume3: {
             type: String,
             maxlength: [325, 'La descripción debe tener max. 325 caracteres'],
+            default: "Write here your third resume"
         },
         resume4: {
             type: String,
             maxlength: [100, 'La descripción debe tener max.100 caracteres'],
+            default: "Write here your fourth resume"
         },
         likes: [{
             type: String,

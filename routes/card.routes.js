@@ -1,91 +1,23 @@
 const router = require('express').Router()
 
-const Card = require('./../models/Card.model')
+const { isAuthenticated } = require('../middlewares/verifyToken.middleware')
 
-router.get("/all", (req, res, next) => {
+const { getAllCards, getCardsById, getOwner, getSubject, getDetails, saveCard, editCard, deleteCard } = require('../controllers/card.controllers')
 
-    Card
-        // TODO: SELECCIONAR
-        .find()
-        .then(response => res.json(response))
-        .catch(err => next(err))
-})
+router.get("/all", getAllCards)
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', getCardsById)
 
-    const { id } = req.params
+router.get("/owner/:owner", getOwner)
 
-    Card
-        .findById(id)
-        .then(renponse => res.json(renponse))
-        .catch(err => next(err))
-})
+router.get("/subject/:subject", getSubject)
 
+router.get("/details/:id", getDetails)
 
+router.post("/save", isAuthenticated, saveCard)
 
-router.get("/owner/:owner", (req, res, next) => {
+router.put("/:id/edit", isAuthenticated, editCard)
 
-    const { owner } = req.params
-
-    Card
-        .find({ owner })
-        .then(renponse => res.json(renponse))
-        .catch(err => next(err))
-})
-
-router.get("/subject/:subject", (req, res, next) => {
-
-    const { subject } = req.params
-
-    Card
-        .findById(subject)
-        .then(response => res.json(response))
-        .catch(err => next(err))
-})
-
-router.get("/details/:id", (req, res, next) => {
-
-    const { id } = req.params
-
-    Card
-        .findById(id)
-        .then(response => res.json(response))
-        .catch(err => next(err))
-})
-
-router.post("/save", (req, res, next) => {
-
-    const { title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner } = req.body
-
-    console.log(req.body)
-
-    Card
-        .create({ title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner })
-        .then(response => res.json(response))
-        .catch(err => next(err))
-})
-
-router.put("/:id/edit", (req, res, next) => {
-
-    const { id } = req.params
-    const { title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner } = req.body
-
-    Card
-        .findByIdAndUpdate(id, { title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner })
-        .then(response => res.json(response))
-        .catch(err => next(err))
-})
-
-router.delete("/delete/:id", (req, res, next) => {
-
-    const { id } = req.params
-
-    Card
-        .findByIdAndDelete(id)
-        // TODO: REVISAR CASOS RESOLUBLES CON SENDTSTAUS
-        // TODO: VER VIDEO DE CONTROLADCORES
-        .then(() => res.sendStatus(204))
-        .catch(err => next(err))
-})
+router.delete("/delete/:id", isAuthenticated, deleteCard)
 
 module.exports = router
