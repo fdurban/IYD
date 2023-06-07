@@ -5,7 +5,8 @@ const cardSchema = new Schema(
         title: {
             type: String,
             required: [true, "You need at least one summary or postit"],
-            default: "Campo no completado"
+            default: "Campo no completado, entra en la carta para editar el título",
+            unique: true
         },
         subject: {
             type: String,

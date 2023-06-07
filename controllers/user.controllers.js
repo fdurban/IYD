@@ -69,11 +69,24 @@ const removeFavoriteCard = (req, res, next) => {
         .catch((err) => next(err));
 }
 
+const getFavoriteCards = (req, res, next) => {
+    const { id } = req.params;
+    User
+        .findById(id)
+        .populate('cards')
+        .select('card')
+        .then(response => {
+            console.log({ response })
+            res.json(response.cards)
+        }).catch(err => next(err))
+}
+
 module.exports = {
     getAllUsers,
     getUserById,
     editUserById,
     deleteUserById,
     addFavoriteCard,
-    removeFavoriteCard
+    removeFavoriteCard,
+    getFavoriteCards
 }
