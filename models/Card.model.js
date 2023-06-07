@@ -38,7 +38,8 @@ const cardSchema = new Schema(
             default: "Write here your fourth resume"
         },
         likes: [{
-            type: String,
+            type: Schema.Types.ObjectId,
+            ref: 'User'
 
         }],
         owner: {
