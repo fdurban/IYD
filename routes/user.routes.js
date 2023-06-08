@@ -9,7 +9,7 @@ const {
     deleteUserById,
     addFavoriteCard,
     removeFavoriteCard,
-    getFavoriteCards,
+    getFavoriteCards
 } = require('../controllers/user.controllers')
 
 router.get("/getAllUsers", getAllUsers)

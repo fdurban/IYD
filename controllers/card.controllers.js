@@ -77,41 +77,9 @@ const deleteCard = (req, res, next) => {
 
     Card
         .findByIdAndDelete(id)
-        // TODO: REVISAR CASOS RESOLUBLES CON SENDTSTAUS
         .then(() => res.sendStatus(204))
         .catch(err => next(err))
 }
-
-// const favoriteCard = (req, res, next) => {
-//     const { id } = req.params;
-//     const { cardId } = req.body;
-
-//     User
-//         .findByIdAndUpdate(
-//             id,
-//             { $push: { cards: cardId } },
-//             { new: true }
-//         )
-//         .then((user) => {
-//             res.json(user);
-//         })
-//         .catch((err) => next(err));
-// }
-
-// const deleteFavoriteCard = (req, res, next) => {
-//     const { id } = req.params;
-//     const { cardId } = req.body;
-
-//     User.findByIdAndUpdate(
-//         id,
-//         { $pull: { cards: cardId } },
-//         { new: true }
-//     )
-//         .then((user) => {
-//             res.json(user);
-//         })
-//         .catch((err) => next(err));
-// }
 
 module.exports = {
 
@@ -122,8 +90,5 @@ module.exports = {
     getDetails,
     saveCard,
     editCard,
-    deleteCard,
-    // favoriteCard,
-    // deleteFavoriteCard
-
+    deleteCard
 }

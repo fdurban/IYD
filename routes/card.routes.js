@@ -10,9 +10,7 @@ const {
     getDetails,
     saveCard,
     editCard,
-    deleteCard,
-    // favoriteCard,
-    // deleteFavoriteCard
+    deleteCard
 } = require('../controllers/card.controllers')
 
 router.get("/all", getAllCards)
@@ -30,9 +28,5 @@ router.post("/save", isAuthenticated, saveCard)
 router.put("/:id/edit", isAuthenticated, editCard)
 
 router.delete("/delete/:id", isAuthenticated, deleteCard)
-
-// router.put("/:id/favoriteCard/add", isAuthenticated, favoriteCard)
-
-// router.put("/:id/favoriteCard/remove", isAuthenticated, deleteFavoriteCard)
 
 module.exports = router
