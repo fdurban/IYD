@@ -49,8 +49,8 @@ router.post('/login', (req, res, next) => {
     const { email, password } = req.body;
 
     if (email === '' || password === '') {
-        res.status(400).json({ message: "Provide email and password." });
-        return;
+        res.status(400).json({ message: "Provide email and password." })
+        return
     }
 
     User
@@ -64,7 +64,7 @@ router.post('/login', (req, res, next) => {
 
             if (bcrypt.compareSync(password, foundUser.password)) {
 
-                const { _id, email, username, avatar } = foundUser;
+                const { _id, email, username, avatar } = foundUser
 
                 const payload = { _id, email, username, avatar }
 
@@ -74,10 +74,10 @@ router.post('/login', (req, res, next) => {
                     { algorithm: 'HS256', expiresIn: "6h" }
                 )
 
-                res.json({ authToken: authToken });
+                res.json({ authToken: authToken, user_id: foundUser._id })
             }
             else {
-                res.status(401).json({ message: "Unable to authenticate the user" });
+                res.status(401).json({ message: "Unable to authenticate the user" })
             }
 
         })
