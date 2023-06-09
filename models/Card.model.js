@@ -38,14 +38,13 @@ const cardSchema = new Schema(
             maxlength: [100, 'La descripción debe tener max.100 caracteres'],
             default: "Write here your fourth resume"
         },
-        likes: [{
-            type: Schema.Types.ObjectId,
-            ref: 'User'
-
-        }],
         owner: {
             type: Schema.Types.ObjectId,
             ref: 'User'
+        },
+        likes: {
+            type: Number,
+            default: 0
         }
     },
     {

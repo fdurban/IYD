@@ -1,5 +1,5 @@
 const User = require('./../models/User.model')
-
+const Card = require('./../models/Card.model')
 const getAllUsers = (req, res, next) => {
 
     User
@@ -42,31 +42,39 @@ const addFavoriteCard = (req, res, next) => {
     const { id } = req.params;
     const { cardID } = req.body;
 
-    User
-        .findByIdAndUpdate(
-            id,
-            { $push: { cards: cardID } },
-            { new: true }
-        )
-        .then((user) => {
-            res.json(user);
+    Card.findByIdAndUpdate(cardID, { $inc: { likes: 1 } })
+        .then(() => {
+
+            User
+                .findByIdAndUpdate(
+                    id,
+                    { $push: { cards: cardID } },
+                    { new: true }
+                )
+                .then((user) => {
+                    res.json(user);
+                })
+                .catch((err) => next(err));
         })
-        .catch((err) => next(err));
+
+
 }
 const removeFavoriteCard = (req, res, next) => {
     const { id } = req.params;
     const { cardID } = req.body;
 
-    User
-        .findByIdAndUpdate(
-            id,
-            { $pull: { cards: cardID } },
-            { new: true }
-        )
-        .then((user) => {
-            res.json(user);
-        })
-        .catch((err) => next(err));
+    Card.findByIdAndUpdate(cardID, { $inc: { likes: -1 } }).then(() => {
+        User
+            .findByIdAndUpdate(
+                id,
+                { $pull: { cards: cardID } },
+                { new: true }
+            )
+            .then((user) => {
+                res.json(user);
+            })
+            .catch((err) => next(err));
+    })
 }
 
 const getFavoriteCards = (req, res, next) => {
