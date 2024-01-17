@@ -1,9 +1,56 @@
 const router = require('express').Router()
+var passport = require('passport');
+var GoogleStrategy = require('passport-google-oidc');
 const bcrypt = require('bcryptjs')
 const User = require('../models/User.model')
 const jwt = require('jsonwebtoken')
 const { isAuthenticated } = require("../middlewares/verifyToken.middleware")
 const saltRounds = 10
+
+passport.use(new GoogleStrategy({
+    clientID: process.env['GOOGLE_CLIENT_ID'],
+    clientSecret: process.env['GOOGLE_CLIENT_SECRET'],
+    callbackURL: 'http://localhost:5005/api/auth/oauth2/redirect/google',
+    scope: ['profile'],
+}, function (accessToken, refreshToken, profile, cb) {
+    User.findOne({ googleId: profile.id }, function (err, user) {
+        if (err) { return cb(err); }
+        if (!user) {
+            const newUser = new User({
+                username: profile.displayName, // Use displayName as username (you might want to adjust this)
+                email: profile.emails[0].value,
+                password: '', // No password for Google users
+                avatar: profile.photos[0].value,
+            });
+            console.log(profile.displayName),
+
+                newUser.save(function (err) {
+                    if (err) { return cb(err); }
+                    return cb(null, newUser);
+                });
+        } else {
+            return cb(null, user);
+        }
+    });
+}));
+
+
+passport.serializeUser(function (user, cb) {
+    cb(null, user.id); // Utiliza el campo único del usuario como identificador de la sesión
+});
+
+passport.deserializeUser(function (id, cb) {
+    User.findById(id, function (err, user) {
+        cb(err, user);
+    });
+});
+
+router.get('/login/federated/google', passport.authenticate('google'));
+
+router.get('/api/auth/oauth2/redirect/google', passport.authenticate('google', {
+    successRedirect: process.env.ORIGIN,
+    failureRedirect: '/login'
+}));
 
 router.post('/signup', (req, res, next) => {
 
@@ -83,6 +130,13 @@ router.post('/login', (req, res, next) => {
         })
         .catch(err => next(err));
 })
+
+router.post('/logout', function (req, res, next) {
+    req.logout(function (err) {
+        if (err) { return next(err); }
+        res.redirect('/');
+    });
+});
 
 
 

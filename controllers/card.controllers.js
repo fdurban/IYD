@@ -3,7 +3,6 @@ const Card = require('./../models/Card.model')
 const getAllCards = (req, res, next) => {
 
     Card
-        // TODO: SELECCIONAR
         .find()
         .then(response => res.json(response))
         .catch(err => next(err))
