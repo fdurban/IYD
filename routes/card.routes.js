@@ -5,7 +5,7 @@ const { isAuthenticated } = require('../middlewares/verifyToken.middleware')
 const {
     getAllCards,
     getCardsById,
-    getOwner,
+    getCardsbyOwner,
     getSubject,
     getDetails,
     saveCard,
@@ -17,13 +17,13 @@ router.get("/all", getAllCards)
 
 router.get('/:id', getCardsById)
 
-router.get("/owner/:owner", getOwner)
+router.get("/owner/:owner", getCardsbyOwner)
 
 router.get("/subject/:subject", getSubject)
 
 router.get("/details/:id", getDetails)
 
-router.post("/save", isAuthenticated, saveCard)
+router.post("/save", saveCard)
 
 router.put("/:id/edit", isAuthenticated, editCard)
 

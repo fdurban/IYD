@@ -18,7 +18,7 @@ const getCardsById = (req, res, next) => {
         .catch(err => next(err))
 }
 
-const getOwner = (req, res, next) => {
+const getCardsbyOwner = (req, res, next) => {
 
     const { owner } = req.params
 
@@ -51,7 +51,7 @@ const getDetails = (req, res, next) => {
 const saveCard = (req, res, next) => {
 
     const { title, subject, main_content, resume1, resume2, resume3, resume4, likes } = req.body
-    const { _id: owner } = req.payload
+    const owner = req.payload ? req.payload._id : null;
 
     Card
         .create({ title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner })
@@ -84,7 +84,7 @@ module.exports = {
 
     getAllCards,
     getCardsById,
-    getOwner,
+    getCardsbyOwner,
     getSubject,
     getDetails,
     saveCard,

@@ -5,8 +5,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=development node server.js",
     "dev": "cross-env NODE_ENV=production nodemon server.js",
-    "test": "cross-env NODE_ENV=test jest --verbose",
-    "test:watch": "npm run test -- --watch --silent"
+    "test": "cross-env NODE_ENV=test jest --verbose --silent tests/cards.test.js",
+    "test:watch": "npm run test -- --watch"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
