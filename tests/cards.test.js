@@ -74,17 +74,40 @@ test(' a valid card can be added', async () => {
         likes: 0,
         owner: '65a937a3360544bd9023c64f'
     }
-
     // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWE5MzdjMDM2MDU0NGJkOTAyM2M2NTUiLCJlbWFpbCI6Imx1ZHVyYmFuQG1zbi5jb20iLCJ1c2VybmFtZSI6Ikx1Y8OtYSIsImF2YXRhciI6Imh0dHBzOi8vcmVzLmNsb3VkaW5hcnkuY29tL2RrY2YzbXY0ci9pbWFnZS91cGxvYWQvdjE3MDU1ODg2NjYvaHIzbXFsaTVqZ3JkbGVkcWN5YjIuanBnIiwiaWF0IjoxNzA1NjYzNTk5LCJleHAiOjE3MDU2ODUxOTl9.Plh6jKCj3lZWJkzSnYATComzzTS2NYpp1ZYYCOfn5to'
     try {
-        const response = await api
+        await api
             .post('/api/cards/save')
             // .set('Authorization', `Bearer ${token}`)
             .send(newCard)
             .expect(200)
             .expect('Content-Type', /application\/json/)
 
-        console.log(response.body); // Log the response body
+        const response = await api.get('/api/cards/all')
+        const contents = response.body.map(note => note.title)
+        expect(contents).toContain(newCard.title)
+
+    } catch (error) {
+        console.error(error);
+        throw error; // Rethrow the error to fail the test
+    }
+})
+test(' a note cannot be added without title', async () => {
+    const newCardwithoutcontent = {
+        title: ""
+    }
+    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NWE5MzdjMDM2MDU0NGJkOTAyM2M2NTUiLCJlbWFpbCI6Imx1ZHVyYmFuQG1zbi5jb20iLCJ1c2VybmFtZSI6Ikx1Y8OtYSIsImF2YXRhciI6Imh0dHBzOi8vcmVzLmNsb3VkaW5hcnkuY29tL2RrY2YzbXY0ci9pbWFnZS91cGxvYWQvdjE3MDU1ODg2NjYvaHIzbXFsaTVqZ3JkbGVkcWN5YjIuanBnIiwiaWF0IjoxNzA1NjYzNTk5LCJleHAiOjE3MDU2ODUxOTl9.Plh6jKCj3lZWJkzSnYATComzzTS2NYpp1ZYYCOfn5to'
+    try {
+        await api
+            .post('/api/cards/save')
+            // .set('Authorization', `Bearer ${token}`)
+            .send(newCardwithoutcontent)
+            .expect(400)
+            .expect('Content-Type', /application\/json/)
+
+        const response = await api.get('/api/cards/all')
+        const contents = response.body.map(note => note.title)
+        expect(contents).toContain(newCard.title)
 
     } catch (error) {
         console.error(error);
