@@ -23,7 +23,7 @@ router.get("/subject/:subject", getSubject)
 
 router.get("/details/:id", getDetails)
 
-router.post("/save", saveCard)
+router.post("/save", isAuthenticated, saveCard)
 
 router.put("/:id/edit", isAuthenticated, editCard)
 

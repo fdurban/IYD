@@ -1,11 +1,13 @@
 const Card = require('./../models/Card.model')
 
-const getAllCards = (req, res, next) => {
+const getAllCards = async (req, res, next) => {
+    try {
 
-    Card
-        .find()
-        .then(response => res.json(response))
-        .catch(err => next(err))
+        const cards = await Card.find()
+        res.json(cards)
+    }
+    catch (error) { next(error) }
+
 }
 
 const getCardsById = (req, res, next) => {
@@ -48,15 +50,17 @@ const getDetails = (req, res, next) => {
         .catch(err => next(err))
 }
 
-const saveCard = (req, res, next) => {
+const saveCard = async (req, res, next) => {
 
     const { title, subject, main_content, resume1, resume2, resume3, resume4, likes } = req.body
     const owner = req.payload ? req.payload._id : null;
 
-    Card
-        .create({ title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner })
-        .then(response => res.json(response))
-        .catch(err => next(err))
+    try {
+        const savedCard = await Card
+            .create({ title, subject, main_content, resume1, resume2, resume3, resume4, likes, owner })
+        res.json(savedCard)
+    }
+    catch (error) { next(error) }
 }
 
 const editCard = (req, res, next) => {

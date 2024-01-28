@@ -9,13 +9,11 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
-      required: [true, 'Email is required.'],
-      unique: true,
+      unique: [true, "username already in the database"],
       trim: true
     },
     password: {
       type: String,
-      required: [true, 'Password is required.']
     },
     avatar: {
       type: String,
@@ -33,7 +31,7 @@ const userSchema = new Schema(
     cards: [{
       type: Schema.Types.ObjectId,
       ref: "Card",
-    }]
+    }],
   },
   {
     timestamps: true
